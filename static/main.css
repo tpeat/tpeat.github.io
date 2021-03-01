@@ -1,0 +1,303 @@
+/*This style sheet has altered common CSS framework for my preferences
+Editor/author: Tristan Peat >> tristan.j.peat@gmail.com */ 
+
+/*Notes this is my styling by id */ 
+#table-images{object-fit: fill}
+
+
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+html{line-height:1.15;-webkit-text-size-adjust:100%}
+body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}
+hr{box-sizing:content-box;height:0;overflow:visible}
+pre{font-family:monospace,monospace;font-size:1em}
+a{background-color:transparent}
+code{font-family:monospace,monospace;font-size:1em}
+small{font-size:80%}
+img{border-style:none}
+ol,ul{list-style:none;margin:0;padding:0}
+
+/*Took out parts of normalize.css parts that I don't want*/
+*,::before,::after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#d2d6dc}
+img{border-style:solid}
+h1{margin:0}
+table{border-collapse:collapse}
+h1,h2,h3,h4{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+button,input,select{padding:0;line-height:inherit;color:inherit}
+pre,code{font-family:Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+img,svg,video,canvas,audio,iframe,embed{display:block;vertical-align:middle}
+img,video{max-width:100%;height:auto}
+
+/*imported apple font */
+html{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";line-height:1.5}
+
+.container{width:100%;margin-right:auto;margin-left:auto;padding-right:1rem;padding-left:1rem}
+
+/*responsive containers by normalize.css */
+@media(min-width:640px){.container{max-width:640px}}
+@media(min-width:768px){.container{max-width:768px}}
+@media(min-width:1024px){.container{max-width:1024px}}
+@media(min-width:1280px){.container{max-width:1280px}}
+
+/*Rich text for paragraphs */
+.rich-text p{font-size:1rem;font-weight:400;color:#2d3748;line-height:1.625}
+.rich-text p+p{margin-top:1.25rem}
+
+/*This is how th earticle images are wider than the text margins--but it imacts the images in all articles*/
+@media(min-width:1024px){article .max-img{max-width:unset;width:150%;margin-left:-25%}}
+@media(min-width:1024px){article table img{max-width:unset;width:100%}}
+
+
+/*background colors in use */
+.bg-gray-50{background-color:#f9fafb}
+.bg-gray-100{background-color:#f4f5f7}
+.bg-gray-200{background-color:#e5e7eb}
+.bg-gray-300{background-color:#d2d6dc}
+.bg-coral-200{background-color:#fc9191}
+.bg-coral-400{background-color:#ff7a7a;}
+.bg-coral-500{background-color:#ff6969;}
+.bg-coral-600{background-color:#ff5454;}
+.hover\:bg-coral-500:hover{background-color:#ff7a7a;}
+.hover\:bg-coral-200:hover{background-color:#fc9191}
+.hover\:border:hover{background-color: #f4f5f7;}
+
+/*rounded sizes */
+.rounded{border-radius:.25rem}
+.rounded-md{border-radius:.375rem}
+.rounded-lg{border-radius:.5rem}
+.rounded-xl{border-radius:.75rem}
+.rounded-full{border-radius:9999px}
+
+/*general things */
+.cursor-pointer{cursor:pointer}
+.block{display:block}
+.inline-block{display:inline-block}
+.flex{display:flex}
+.inline-flex{display:inline-flex}
+.table{display:table}
+.grid{display:grid}
+.hidden{display:none}
+.flex-col{flex-direction:column}
+.items-start{align-items:flex-start}
+.items-center{align-items:center}
+.justify-center{justify-content:center}
+.justify-between{justify-content:space-between}
+.flex-1{flex:1 1 0}
+.flex-shrink-0{flex-shrink:0}
+.cover{object-position:fill}
+.border{border-width:1px}
+
+/*font weights */
+.font-medium{font-weight:500}
+.font-semibold{font-weight:600}
+.font-bold{font-weight:700}
+.font-extrabold{font-weight:800}
+.font-black{font-weight:900}
+
+/* general heights */
+.h-4{height:1rem}
+.h-5{height:1.25rem}
+.h-6{height:1.5rem}
+.h-8{height:2rem}
+.h-10{height:2.5rem}
+.h-12{height:3rem}
+.h-16{height:8rem}
+.h-1\/2{height:50%}
+.h-full{height:100%}
+.h-auto{height:auto}
+
+/*font sizes */
+.text-xs{font-size:.75rem}
+.text-sm{font-size:.875rem}
+.text-base{font-size:1rem}
+.text-lg{font-size:1.125rem}
+.text-xl{font-size:1.25rem}
+.text-2xl{font-size:1.5rem}
+.text-3xl{font-size:1.875rem}
+.text-4xl{font-size:2.25rem}
+.text-5xl{font-size:3rem}
+
+/*line heights */
+.leading-4{line-height:1rem}
+.leading-5{line-height:1.25rem}
+.leading-6{line-height:1.5rem}
+.leading-7{line-height:1.75rem}
+.leading-8{line-height:2rem}
+.leading-9{line-height:2.25rem}
+.leading-10{line-height:2.5rem}
+.leading-none{line-height:1}
+
+/*Let's talk margins */
+.-m-3{margin:-0.75rem}
+.mx-1{margin-left:.25rem;margin-right:.25rem}
+.my-4{margin-top:1rem;margin-bottom:1rem}
+.my-6{margin-top:1.5rem;margin-bottom:1.5rem}
+.my-12{margin-top:3rem;margin-bottom:3rem}
+.my-16{margin-top:4rem;margin-bottom:4rem}
+.my-24{margin-top:6rem;margin-bottom:6rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.-mx-4{margin-left:-1rem;margin-right:-1rem}
+.mt-1{margin-top:.25rem}
+.mt-2{margin-top:.5rem}
+.mr-2{margin-right:.5rem}
+.mb-2{margin-bottom:.5rem}
+.ml-2{margin-left:.5rem}
+.mt-3{margin-top:.75rem}
+.ml-3{margin-left:.75rem}
+.mt-4{margin-top:1rem}
+.mr-4{margin-right:1rem}
+.ml-4{margin-left:1rem}
+.mt-5{margin-top:1.25rem}
+.mt-6{margin-top:1.5rem}
+.ml-6{margin-left:1.5rem}
+.mt-8{margin-top:2rem}
+.ml-8{margin-left:2rem}
+.mt-9{margin-top:2.25rem}
+.mt-10{margin-top:2.5rem}
+.mt-12{margin-top:3rem}
+.mt-16{margin-top:4rem}
+.mt-24{margin-top:6rem}
+.mt-36{margin-top:10rem}
+.mb-8{margin-bottom:1.5rem}
+.mb-16{margin-bottom:4rem}
+.mb-24{margin-bottom:6rem}
+.-mr-1{margin-right:-0.25rem}
+.-mt-2{margin-top:-0.5rem}
+.-mr-2{margin-right:-0.5rem}
+.-mt-16{margin-top:-4rem}
+.-mt-24{margin-top:-6rem}
+
+/*Maximum widths */
+.max-w-md{max-width:28rem}
+.max-w-lg{max-width:32rem}
+.max-w-2xl{max-width:42rem}
+.max-w-3xl{max-width:48rem}
+.max-w-5xl{max-width:64rem}
+.max-w-screen-sm{max-width:640px}
+.max-w-screen-md{max-width:768px}
+.max-w-screen-lg{max-width:1024px}
+.max-w-screen-xl{max-width:1280px}
+
+
+/*paddings*/
+.p-2{padding:.5rem}
+.p-3{padding:.75rem}
+.p-8{padding:2rem}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.px-2{padding-left:.5rem;padding-right:.5rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}
+.px-3{padding-left:.75rem;padding-right:.75rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}
+.px-4{padding-left:1rem;padding-right:1rem}
+.py-5{padding-top:1.25rem;padding-bottom:1.25rem}
+.px-5{padding-left:1.25rem;padding-right:1.25rem}
+.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.py-8{padding-top:2rem;padding-bottom:2rem}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-12{padding-top:3rem;padding-bottom:3rem}
+.py-16{padding-top:4rem;padding-bottom:4rem}
+.py-24{padding-top:6rem;padding-bottom:6rem}
+.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}
+.px-2\.5{padding-left:.625rem;padding-right:.625rem}
+.pt-2{padding-top:.5rem}
+.pb-3{padding-bottom:.75rem}
+.pt-4{padding-top:1rem}
+.pr-4{padding-right:1rem}
+.pt-8{padding-top:1.5rem}
+.pt-10{padding-top:2.5rem}
+.pt-12{padding-top:3rem}
+.pb-12{padding-bottom:3rem}
+.pb-16{padding-bottom:4rem}
+.pb-20{padding-bottom:5rem}
+.pt-24{padding-top:6rem}
+
+/*positioning stuff */
+.static{position:static}
+.fixed{position:fixed}
+.absolute{position:absolute}
+.relative{position:relative}
+.sticky{position:-webkit-sticky;position:sticky}
+
+
+.top-0{top:0}
+.bottom-0{bottom:0}
+.left-0{left:0}
+.left-1\/2{left:50%}
+.top-full{top:100%}
+.right-full{right:100%}
+.left-full{left:100%}
+
+/*uses of shadow */
+.shadow-xs{box-shadow:0 0 0 1px rgba(0,0,0,0.05)}
+.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,0.1),0 1px 2px 0 rgba(0,0,0,0.06)}
+.shadow-md{box-shadow:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06)}
+.shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05)}
+.shadow-xl{box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04)}
+.shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
+
+/*text-alignment */
+.text-left{text-align:left}
+.text-center{text-align:center}
+.text-right{text-align:right}
+
+/*Text colors */
+.text-white{color:#fff;}
+.text-gray-200{color:#e5e7eb}
+.text-gray-400{color:#9fa6b2}
+.text-gray-500{color:#6b7280}
+.text-gray-600{color:#4b5563}
+.text-gray-700{color:#374151}
+.text-gray-900{color:#161e2e}
+.text-coral-500{color:#ff7a7a;}
+.text-coral-600{color:#ff5454;}
+.text-color-700{color:#fd4b4b}
+.hover\:text-white:hover{color:#fff}
+.hover\:text-gray-200:hover{color:#9fa6b2}
+.hover\:text-coral-500:hover{color:#ff7a7a;}
+.hover\:text-coral-700:hover{color:#ff7a7a;}
+
+.uppercase{text-transform:uppercase}
+.underline{text-decoration:underline}
+.hover\:underline:hover{text-decoration:underline}
+
+/*widths */
+.w-5{width:1.25rem}
+.w-6{width:1.5rem}
+.w-9{width:2.25rem}
+.w-10{width:2.5rem}
+.w-12{width:3rem}
+.w-auto{width:auto}
+.w-1\/2{width:50%}.w-full{width:100%}
+.w-screen{width:100vw}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/*Responsive CSS size Small */
+@media(min-width:640px){
+    .sm\:text-lg{font-size:1.125rem}
+    .sm\:text-4xl{font-size:2.25rem}
+    .sm\:leading-none{line-height:1}
+}
+
+/*Responsive CSS size medium */
+@media(min-width:768px){
+    .md\:text-lg{font-size:1.125rem}
+    .md\:text-xl{font-size:1.25rem}
+    .md\:text-3xl{font-size:1.875rem}
+    .md\:text-5xl{font-size:3rem}
+    .md\:m-0{margin:0}
+    .md\:my-16{margin-top:4rem;margin-bottom:4rem}
+    .md\:mt-0{margin-top:0}
+    .md\:ml-4{margin-left:1rem}
+    .md\:mt-5{margin-top:1.25rem}
+    .md\:mt-8{margin-top:2rem}
+    .md\:mt-16{margin-top:4rem}
+    .md\:py-4{padding-top:1rem;padding-bottom:1rem}
+    .md\:px-10{padding-left:2.5rem;padding-right:2.5rem}
+    .md\:w-half{width:50%}
+}
+
+/*special large */
+@media(max-width:620px){
+    .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
