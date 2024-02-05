@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://tpeat.github.io/sitemap.xml
