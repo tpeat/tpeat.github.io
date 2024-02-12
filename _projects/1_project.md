@@ -8,40 +8,59 @@ category: work
 related_publications: true
 ---
 
-The project description is an object tracking algorithm on airborne data.
+## Project Objective:
+* Track single a airborne object from closing distances
+* Leverage transfer learning and finetune on a custom airborne object dataset
+* Model must handle states of occlusion/deformity/clutter/multi-object
+* Explore state of the art tracking techniques
+* Experiment with reinforcement learning based trackers
+* Model must fit into a single GPU, use <12G of RAM, and operate at >50FPS for inference time
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/track-tmp.gif" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+
+
+### Key contributions:
+* Found Amazon Airborn Object Tracking dataset
+* Implemented custom dataloader, downloading images from S3, cropping, and segmenting the images into Annotation binary masks
+* Conducted full literature review, ultimately choosing Associating Objects with Transformers model architecture as launching point
+* Identified key areas of improvement for the model such as the need for a better backbone, reducing history of flights, and using a sparser segmentation head
+* Developed hierarchical DINO based encoder backbone
+* Leverage TokenMerging to improve efficiency of attention mechanisms by reducing token number without loss of information
+* Introduced FlashAttention for enhanced GPU usage
+* Launched hundreds of experiments on multi GPU, slurm cluster
+
+More details below on the progress from literature review, dataset choice, augmentations, manipulations, model choice, training architecture, next steps.
 
 ### Literature Review
 
-Faster R-CNN:
-* Region proposal network
-* Fully convolutional
-* Two stage detector
-* Anchor based approach
-* IoU lost function
+The initial literature review was focused on learning from state of the art tracking techniques as well as identifying the feasibility of using RL for tracking. RL in tracking is not well studied and typicaly deep learning methods are preferred for their quicker inference speeds. 
 
-YOLO:
-* Single state detector
-* Grid based detector
-* End to end training
-* Real time processing
+Key takeaways:
+* One stage networks are preferred for end to end training and faster inference time
+* IoU and distance from centroid are preferred metrics
+* Segmentation is preffered for objects of varying shape, but is slower
+* Many models focus on multi-object tracking (MOT) and also perform worse on single-object tracking (SOT)
+* LaSOT is most common SOT dataset, VOT2018, GOT-10k honorable mention
+* Template matching is extremely fast, Siamese networks use this week to balance speed and accuracy
 
-### Key Findings:
 
 **Complex Environments and Object Variability:** Effective tracking in distracting environments necessitates handling objects with large variance in shape and scale, and coping with both partial and full occlusions.
 
-**Model Exploration:** The discussion around the DINO and Perceiver models highlights a curiosity for models that adeptly handle complex tracking scenarios. The inquiry into Reinforcement Learning (RL) underscores a desire for models that are not just reactive but can anticipate and adapt to changes in the environment.
+**Model Exploration:** 
 
-**Actor-Critic Reinforcement Learning Architecture:** This approach emerges as a promising solution, combining the strengths of both policy-based and value-based RL. It optimizes tracking by using an actor to explore and a critic to evaluate the actions, guiding the system towards optimal decision-making.
+Template matching {% cite hu2022siammask %}
 
-**SiamMask and Faster R-CNN:** These models are highlighted for their effectiveness in real-time object tracking and detection. SiamMask, for instance, offers a fully convolutional Siamese approach to produce bounding boxes and perform segmentation at impressive speeds, while Faster R-CNN innovates with its Region Proposal Network (RPN) for efficient and accurate object detection.
+Why we didn't use RL:
 
-**Deep Q-Learning and Neural Maps for RL:** Incorporating deep Q-networks and structured memory into RL presents a pathway for enhancing object tracking. These approaches refine the decision-making process, allowing for more precise and adaptive tracking strategies.
+What makes DINO such a good encoder?
+
+How should we handle memory of past states/trajectory?
 
 **Self-Supervised Learning and Transformers:** The exploration of self-supervised learning models like DINO, and the integration of Transformers, suggests a shift towards leveraging these advanced architectures for improved tracking performance, especially in understanding long-range dependencies and spatial-temporal relationships.
-
-**Application to Aerial Tracking:** The unique challenges posed by tracking aerial vehicles, such as variable appearances from different angles and occlusions, necessitate innovative solutions. This includes adaptive template updating and employing lightweight deep vision reinforcement learning for dynamic object tracking from UAV perspectives.
-
-**Datasets and Evaluation:** The review identifies the need for specialized datasets catering to aerial vehicles and suggests methods for creating comprehensive datasets by merging existing ones. Evaluation metrics such as mean overlap precision, tracking speed, and robustness evaluations (SRE and TRE) are crucial for assessing algorithm performance.
 
 
 ### Data sourcing: Amazon Airborne Object Tracking Dataset
@@ -72,28 +91,29 @@ By passing the image along with its respective bounding box to the "Segment Anyt
     </div>
 </div>
 <div class="caption">
-    Examples from the Segment Anything model
+    Examples from the Segment Anything model.
 </div>
 
-You can also put regular text between your rows of images, even citations {% cite einstein1950meaning %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+The Segmant Anything model is extremely performant on most images but fails on some with extremly small targets, typically outputting the entire bbox as a annotation mask or outputting no annotation {% cite kirillov2023segment %}.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/helicopter.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
     </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/copter-seg.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
 </div>
 <div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
+    SAM model applied to sample from Airborne Object Tracking dataset.
 </div>
 
-## Architecture
+## Model Architecture
 
-The chosen model architecture was based on the [Associating Objects with Transformers](https://arxiv.org/pdf/2106.02638.pdf) paper.
+The chosen architecture was based on the [Associating Objects with Transformers](https://arxiv.org/pdf/2106.02638.pdf) model.
 
-Which was further improved by the [Decoupling Features in Hierarchical Propagation
-for Video Object Segmentation](https://arxiv.org/pdf/2210.09782.pdf) paper.
+This model was further improved by the [Decoupling Features in Hierarchical Propagation
+for Video Object Segmentation](https://arxiv.org/pdf/2210.09782.pdf) (DeAOT) model. The key difference between the two being a Gated Propogation Module (GPM) that seperates object specific from object agnostic features. Within the GPM, attention is performed on local tokens and on a global tokens which uses historical information {% cite yang2022decoupling %}. The AOT model uses heiarchical propogation to trasfer information from past frames to current frame {% cite yang2021associating %}. The DeAOT model achieves new SOTA on YouTube-VOS, DAVIS 2017, DAVIS 2016, and VOT 2020. On YouTube-VOS, DeAOT achieves 82% accuracy at 52FPS, meeting the project requirements.
 
 <div class="row justify-content-sm-center">
     <div class="col-sm-8 mt-3 mt-md-0">
@@ -104,15 +124,36 @@ for Video Object Segmentation](https://arxiv.org/pdf/2210.09782.pdf) paper.
     </div>
 </div>
 <div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
+    Visualization of DeAOT architecture
 </div>
+
+The creators of the AOT model provide open source code. One benefit of their code base is each model is defined from in a highly cofigurable manner, making it extremly easy to change backbone, latent dimension, number of attention heads, type of attention, etc.
+
+```python
+class DefaultModelConfig():
+    def __init__(self):
+        self.MODEL_NAME = 'AOTDefault'
+        self.MODEL_VOS = 'aot'
+        self.MODEL_ENGINE = 'aotengine'
+        self.MODEL_ALIGN_CORNERS = True
+        self.MODEL_ENCODER = 'mobilenetv2'
+        self.MODEL_ENCODER_PRETRAIN = './pretrain_models/mobilenet_v2-b0353104.pth'
+        self.MODEL_ENCODER_DIM = [24, 32, 96, 1280]  # 4x, 8x, 16x, 16x
+        self.MODEL_ENCODER_EMBEDDING_DIM = 256
+        self.MODEL_DECODER_INTERMEDIATE_LSTT = True
+        self.MODEL_FREEZE_BN = True
+        self.MODEL_FREEZE_BACKBONE = False
+        self.MODEL_MAX_OBJ_NUM = 10
+        self.MODEL_SELF_HEADS = 8
+        self.MODEL_ATT_HEADS = 8
+        self.MODEL_LSTT_NUM = 1
+        self.MODEL_EPSILON = 1e-5
+        self.MODEL_USE_PREV_PROB = False
+```
 
 ## Model Improvements
 
-Completed:
-* Pair AOT dataloader with custom dataset
-* Launch experiments on slurm cluster
-* Disable saving segmasks during evaluation
+One major limitation of the AOT code is that during model evaluation, the `Evaluator` object saves copies of the predicted annotation masks to disk. As we scale up the number of experiments, memory limitations become an issue. Instead of saving the masks, I refactored the `Evaluator` methods to calculated `IoU` and `FPS` on the fly.
 
 In progress:
 * Add DINO backbone
