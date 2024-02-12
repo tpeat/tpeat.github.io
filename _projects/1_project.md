@@ -8,7 +8,9 @@ category: work
 related_publications: true
 ---
 
-## Project Objective:
+---
+
+### Project Objective:
 * Track single a airborne object from closing distances
 * Leverage transfer learning and finetune on a custom airborne object dataset
 * Model must handle states of occlusion/deformity/clutter/multi-object
@@ -34,6 +36,8 @@ related_publications: true
 * Launched hundreds of experiments on multi GPU, slurm cluster
 
 More details below on the progress from literature review, dataset choice, augmentations, manipulations, model choice, training architecture, next steps.
+
+---
 
 ### Literature Review
 
