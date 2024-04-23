@@ -157,7 +157,21 @@ class DefaultModelConfig():
 
 ## Model Improvements
 
-One major limitation of the AOT code is that during model evaluation, the `Evaluator` object saves copies of the predicted annotation masks to disk. As we scale up the number of experiments, memory limitations become an issue. Instead of saving the masks, I refactored the `Evaluator` methods to calculated `IoU` and `FPS` on the fly.
+One major limitation of the AOT code is that during model evaluation, the `Evaluator` object saves copies of the predicted annotation masks to disk. As we scale up the number of experiments, memory limitations become an issue. Instead of saving the masks, I refactored the `Evaluator` methods to calculated `IoU` and `FPS` on the fly. We also used distance from center of either prediction masks. 
+
+Key evaluation improvements:
+* IoU was previously computed by loading an predicted mask and truth mask from disk, then leveraging the `cv2` library. However, I already had pred and truth masks in tensor form, so I wrote a custom function to evaluate Iou from batched tensor form.
+* When a predicted mask is blank, IoU would produce divison by zero error and distance from centroid produces a `nan`. I handled these edge cases by catching when `Union == 0` and replacing nans with `384` which is the furthest euclidian distance across a 256x256 image.
+* Demo mode (which creates a video of )
+* I tested the new evaluation changes by adding a `DISPLAY_MASKS` bit to the config which visualizes the pred, truth, and intersection in RGB respectively.
+
+Major challenge:
+
+> The evaluation dataloader only provides one truth mask per `k` frames per sequence, because during inference you only need a single prompt for what you should be tracking (at `t=0`). The rest of the frames shouldn't have truth information or else you wouldn't need to predict. The `Evaluator` object takes advantage of every time a ground truth frame is passed by incorporating that information into assumptions about priors, adding considerable overhead to the `FPS`. 
+
+
+DINO Backbone:
+
 
 In progress:
 * Add DINO backbone
