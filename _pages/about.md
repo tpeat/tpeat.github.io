@@ -23,4 +23,3 @@ During my undergrad, I have had the priviledge of working closely with [Prof. Ja
 In the distant past, I have also had the priviledge of interning at Zillow Group, advised by [Min Ji](). During the summer, I create a traffic reporting data pipeline.
 
 I aiming to pursue my PhD in machine learning to fundamentally change our understanding of deep learning. My research interests lie at the intersection of efficient transformer architectures and safe deployment of deep learning systems, particularly in high-stakes environments. I enjoy experimenting with all computer vision tasks, especially image generation.
- 

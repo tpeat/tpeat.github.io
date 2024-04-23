@@ -11,9 +11,10 @@ related_publications: true
 ---
 
 ### Project Objective:
-* Design a depth estimation model that uses a single lens
-* Collect data for long range depths in a variety of settings
-* Evaluate the model for accuracy at depth ranges
+
+- Design a depth estimation model that uses a single lens
+- Collect data for long range depths in a variety of settings
+- Evaluate the model for accuracy at depth ranges
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -24,8 +25,9 @@ related_publications: true
 I joined this project at Georgia Tech Research Institute (GTRI) after 2 semester from its start. While the model architecture and training pipeline was near complete, the team needed assistance in running experiments and evaluating the models.
 
 ### Key Contributions
-* Developed a model evaluation script that bins pixelwise errors by depths
-* Launched exeriments to evaluate various model configurations on a multi-GPU slurm cluster
+
+- Developed a model evaluation script that bins pixelwise errors by depths
+- Launched exeriments to evaluate various model configurations on a multi-GPU slurm cluster
 
 ---
 
@@ -85,5 +87,4 @@ The inception block uses point wise convolutions to reduce the channelewise dime
 
 ### Results
 
-Less than 5% MAE for up to 500m, less than 10% MAE for up to 1000m. This seriously expands the capability from other models trained on the KITTI dataset which rarely goes beyond 80m. 
-
+Less than 5% MAE for up to 500m, less than 10% MAE for up to 1000m. This seriously expands the capability from other models trained on the KITTI dataset which rarely goes beyond 80m.

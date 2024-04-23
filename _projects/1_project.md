@@ -11,12 +11,13 @@ related_publications: true
 ---
 
 ### Project Objective:
-* Track single a airborne object from closing distances
-* Leverage transfer learning and finetune on a custom airborne object dataset
-* Model must handle states of occlusion/deformity/clutter/multi-object
-* Explore state of the art tracking techniques
-* Experiment with reinforcement learning based trackers
-* Model must fit into a single GPU, use <12G of RAM, and operate at >50FPS for inference time
+
+- Track single a airborne object from closing distances
+- Leverage transfer learning and finetune on a custom airborne object dataset
+- Model must handle states of occlusion/deformity/clutter/multi-object
+- Explore state of the art tracking techniques
+- Experiment with reinforcement learning based trackers
+- Model must fit into a single GPU, use <12G of RAM, and operate at >50FPS for inference time
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
@@ -24,16 +25,16 @@ related_publications: true
     </div>
 </div>
 
-
 ### Key contributions:
-* Found Amazon Airborn Object Tracking dataset
-* Implemented custom dataloader, downloading images from S3, cropping, and segmenting the images into Annotation binary masks
-* Conducted full literature review, ultimately choosing Associating Objects with Transformers model architecture as launching point
-* Identified key areas of improvement for the model such as the need for a better backbone, reducing history of flights, and using a sparser segmentation head
-* Developed hierarchical DINO based encoder backbone
-* Leverage TokenMerging to improve efficiency of attention mechanisms by reducing token number without loss of information
-* Introduced FlashAttention for enhanced GPU usage
-* Launched hundreds of experiments on multi GPU, slurm cluster
+
+- Found Amazon Airborn Object Tracking dataset
+- Implemented custom dataloader, downloading images from S3, cropping, and segmenting the images into Annotation binary masks
+- Conducted full literature review, ultimately choosing Associating Objects with Transformers model architecture as launching point
+- Identified key areas of improvement for the model such as the need for a better backbone, reducing history of flights, and using a sparser segmentation head
+- Developed hierarchical DINO based encoder backbone
+- Leverage TokenMerging to improve efficiency of attention mechanisms by reducing token number without loss of information
+- Introduced FlashAttention for enhanced GPU usage
+- Launched hundreds of experiments on multi GPU, slurm cluster
 
 More details below on the progress from literature review, dataset choice, augmentations, manipulations, model choice, training architecture, next steps.
 
@@ -41,20 +42,20 @@ More details below on the progress from literature review, dataset choice, augme
 
 ### Literature Review
 
-The initial literature review was focused on learning from state of the art tracking techniques as well as identifying the feasibility of using RL for tracking. RL in tracking is not well studied and typicaly deep learning methods are preferred for their quicker inference speeds. 
+The initial literature review was focused on learning from state of the art tracking techniques as well as identifying the feasibility of using RL for tracking. RL in tracking is not well studied and typicaly deep learning methods are preferred for their quicker inference speeds.
 
 Key takeaways:
-* One stage networks are preferred for end to end training and faster inference time
-* IoU and distance from centroid are preferred metrics
-* Segmentation is preffered for objects of varying shape, but is slower
-* Many models focus on multi-object tracking (MOT) and also perform worse on single-object tracking (SOT)
-* LaSOT is most common SOT dataset, VOT2018, GOT-10k honorable mention
-* Template matching is extremely fast, Siamese networks use this week to balance speed and accuracy
 
+- One stage networks are preferred for end to end training and faster inference time
+- IoU and distance from centroid are preferred metrics
+- Segmentation is preffered for objects of varying shape, but is slower
+- Many models focus on multi-object tracking (MOT) and also perform worse on single-object tracking (SOT)
+- LaSOT is most common SOT dataset, VOT2018, GOT-10k honorable mention
+- Template matching is extremely fast, Siamese networks use this week to balance speed and accuracy
 
 **Complex Environments and Object Variability:** Effective tracking in distracting environments necessitates handling objects with large variance in shape and scale, and coping with both partial and full occlusions.
 
-**Model Exploration:** 
+**Model Exploration:**
 
 Template matching {% cite hu2022siammask %}
 
@@ -65,7 +66,6 @@ What makes DINO such a good encoder?
 How should we handle memory of past states/trajectory?
 
 **Self-Supervised Learning and Transformers:** The exploration of self-supervised learning models like DINO, and the integration of Transformers, suggests a shift towards leveraging these advanced architectures for improved tracking performance, especially in understanding long-range dependencies and spatial-temporal relationships.
-
 
 ### Data sourcing: Amazon Airborne Object Tracking Dataset
 
@@ -157,25 +157,26 @@ class DefaultModelConfig():
 
 ## Model Improvements
 
-One major limitation of the AOT code is that during model evaluation, the `Evaluator` object saves copies of the predicted annotation masks to disk. As we scale up the number of experiments, memory limitations become an issue. Instead of saving the masks, I refactored the `Evaluator` methods to calculated `IoU` and `FPS` on the fly. We also used distance from center of either prediction masks. 
+One major limitation of the AOT code is that during model evaluation, the `Evaluator` object saves copies of the predicted annotation masks to disk. As we scale up the number of experiments, memory limitations become an issue. Instead of saving the masks, I refactored the `Evaluator` methods to calculated `IoU` and `FPS` on the fly. We also used distance from center of either prediction masks.
 
 Key evaluation improvements:
-* IoU was previously computed by loading an predicted mask and truth mask from disk, then leveraging the `cv2` library. However, I already had pred and truth masks in tensor form, so I wrote a custom function to evaluate Iou from batched tensor form.
-* When a predicted mask is blank, IoU would produce divison by zero error and distance from centroid produces a `nan`. I handled these edge cases by catching when `Union == 0` and replacing nans with `384` which is the furthest euclidian distance across a 256x256 image.
-* Demo mode (which creates a video of )
-* I tested the new evaluation changes by adding a `DISPLAY_MASKS` bit to the config which visualizes the pred, truth, and intersection in RGB respectively.
+
+- IoU was previously computed by loading an predicted mask and truth mask from disk, then leveraging the `cv2` library. However, I already had pred and truth masks in tensor form, so I wrote a custom function to evaluate Iou from batched tensor form.
+- When a predicted mask is blank, IoU would produce divison by zero error and distance from centroid produces a `nan`. I handled these edge cases by catching when `Union == 0` and replacing nans with `384` which is the furthest euclidian distance across a 256x256 image.
+- Demo mode (which creates a video of )
+- I tested the new evaluation changes by adding a `DISPLAY_MASKS` bit to the config which visualizes the pred, truth, and intersection in RGB respectively.
 
 Major challenge:
 
-> The evaluation dataloader only provides one truth mask per `k` frames per sequence, because during inference you only need a single prompt for what you should be tracking (at `t=0`). The rest of the frames shouldn't have truth information or else you wouldn't need to predict. The `Evaluator` object takes advantage of every time a ground truth frame is passed by incorporating that information into assumptions about priors, adding considerable overhead to the `FPS`. 
-
+> The evaluation dataloader only provides one truth mask per `k` frames per sequence, because during inference you only need a single prompt for what you should be tracking (at `t=0`). The rest of the frames shouldn't have truth information or else you wouldn't need to predict. The `Evaluator` object takes advantage of every time a ground truth frame is passed by incorporating that information into assumptions about priors, adding considerable overhead to the `FPS`.
 
 DINO Backbone:
-
+The
 
 In progress:
-* Add DINO backbone
-* FlashAttention for more efficient GPU usage
-* TokenMerging
-* Add Layerwise learning rate decay for deepest models
-* Sparser segmentation head
+
+- Add DINO backbone
+- FlashAttention for more efficient GPU usage
+- TokenMerging
+- Add Layerwise learning rate decay for deepest models
+- Sparser segmentation head

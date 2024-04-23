@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Accepted a summer internship with Amazon!🙏 
+Accepted a summer internship with Amazon!🙏
