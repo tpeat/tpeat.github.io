@@ -16,10 +16,10 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I'm a BSMS student @ Georgia Tech specializing in ML.
+I'm a MSCS student @ Georgia Tech specializing in Machine Learning.
 
-During my undergrad, I have had the priviledge of working closely with [Prof. Jason Zutty](https://scholar.google.com/citations?user=4pvykF8AAAAJ&hl=en) at GTRI on a state-of-the-art computer vision models for depth estimation and object tracking.
+I am currently working under [Prof. Jason Zutty](https://scholar.google.com/citations?user=4pvykF8AAAAJ&hl=en) as Graduate Machine Learning Research Assistant at GTRI on a variety of computer vision models.
 
-In the distant past, I have also had the priviledge of interning at Zillow Group, advised by [Min Ji](). During the summer, I create a traffic reporting data pipeline.
+This past summer, I interned at Amazon (AWS), under [Adam Marrapode](), building a custom AD algorithm and system to root cause performance metric anomalies. In the distant past, I have also had the priviledge of interning at Zillow Group, advised by [Min Ji](), wherein I created a traffic reporting data pipeline.
 
-I aiming to pursue my PhD in machine learning to fundamentally change our understanding of deep learning. My research interests lie at the intersection of efficient transformer architectures and safe deployment of deep learning systems, particularly in high-stakes environments. I enjoy experimenting with all computer vision tasks, especially image generation.
+I am aiming to pursue my PhD in machine learning to fundamentally change our understanding of deep learning. I am particularly interested in continual/lifelong learning in DL systems and enjoy experimenting with neuro-inspired alternatives to SGD for training.
