@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Concluded latest project Messi-Anything ⚽️
+Concluded Consistency model image inpainting project [Messi-Anything](https://github.com/tpeat/segment-and-replace) ⚽️
