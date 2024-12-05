@@ -6,6 +6,7 @@ description: Survey of some recent papers on image generation models
 tags: cv
 categories:
 thumbnail: assets/img/9.jpg
+related_publications: true
 ---
 
 Last November, I attended a talk by Dr. Yang Song through ML@GT seminar series on Consistency Models. Inspired by his clear delivery and important research, I felt drawn towards exploring image generation more.
