@@ -18,8 +18,8 @@ social: true # includes social icons at the bottom of the page
 
 I'm a MSCS student @ Georgia Tech specializing in Machine Learning.
 
-I am currently working under [Prof. Jason Zutty](https://scholar.google.com/citations?user=4pvykF8AAAAJ&hl=en) as Graduate Machine Learning Research Assistant at GTRI on a variety of computer vision models.
+I am currently working under [Prof. Jason Zutty](https://scholar.google.com/citations?user=4pvykF8AAAAJ&hl=en) as Graduate Machine Learning Research Assistant at GTRI on a variety of computer vision tasks, most recently distributed multi-stream object detection and tracking for survivability. I'm also completing my master's project under [Prof. Kartik Goyal](https://kartikgo.github.io/) on the topic of dynamic compute for faster LLM inference. 
 
-This past summer, I interned at Amazon (AWS), under [Adam Marrapode](), building a custom AD algorithm and system to root cause performance metric anomalies. In the distant past, I have also had the priviledge of interning at Zillow Group, advised by [Min Ji](), wherein I created a traffic reporting data pipeline.
+This past summer, I interned at Amazon (AWS), under [Adam Marrapode](), building a custom AD algorithm and system to root cause performance metric anomalies. In the distant past, I have also had the priviledge of interning at Zillow Group, advised by [Min Ji](), where I created a traffic reporting data pipeline.
 
-I am aiming to pursue my PhD in provable deep learning to leverage a better understanding of neural representations for more efficient training and faster inference in foundation models. My interests span clustering in Transformer models, theoretical properties of stochastic gradient descent, high dimensional discrete tokenization, out-of-distribution performance, gradient flows, benign overfitting, and embodied AI.
+I am aiming to pursue my PhD in provable deep learning to characterized the geometry and properties of learned representations to encourage trust and faster inference in foundation models. My interests span theoretical properties of Transformer models, optimal transport, high dimensional discrete tokenization, out-of-distribution performance, gradient flows, benign overfitting, score based models via Schrondingers bridge, and embodied AI.
