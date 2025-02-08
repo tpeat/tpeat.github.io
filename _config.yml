@@ -130,7 +130,7 @@ pagination:
   enabled: true
 
 related_blog_posts:
-  enabled: true
+  enabled: false
   max_related: 5
 
 # Giscus comments (RECOMMENDED)
@@ -199,6 +199,8 @@ kramdown:
     block:
       line_numbers: false
       start_line: 1
+
+lsi: false
 
 # Includes & excludes
 include: ["_pages"]
